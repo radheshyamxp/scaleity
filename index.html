@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scaleity — We Build Apps That Scale</title>
+<meta name="description" content="Scaleity builds MVP apps, SaaS platforms, mobile apps & websites for founders and businesses. Ship fast, scale smart.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ══════════════════════════════════════════
+  HOW TO SET UP EMAILJS (5 minutes, free):
+  1. Go to https://www.emailjs.com and create a free account
+  2. Click "Add New Service" → choose Gmail → connect support@scaleity.in
+     → copy the Service ID (e.g. service_abc123)
+  3. Click "Email Templates" → Create New Template → use this template body:
+     Subject: New Project Inquiry — {{service}}
+     Body:
+       Name: {{from_name}}
+       Email: {{from_email}}
+       WhatsApp: {{whatsapp}}
+       Service: {{service}}
+       Budget: {{budget}}
+       Message: {{message}}
+     To Email: {{to_email}}   (set to support@scaleity.in)
+     → Save → copy the Template ID (e.g. template_xyz789)
+  4. Go to Account → copy your Public Key (e.g. abc123XYZ)
+  5. Paste all three values below where it says YOUR_*
+═══════════════════════════════════════════ -->
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ▼ PASTE YOUR VALUES HERE ▼
+  const EMAILJS_PUBLIC_KEY  = 'fjBbCtPWUGRoMn9sV';
+  const EMAILJS_SERVICE_ID  = 'service_3ndikle';
+  const EMAILJS_TEMPLATE_ID = 'template_4bgrrbp';
+  // ▲ PASTE YOUR VALUES HERE ▲
+
+  (function(){ emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); })();
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --y:#F5E642;--yd:rgba(245,230,66,0.12);--yb:rgba(245,230,66,0.22);
+  --blk:#050505;--blk2:#0d0d0d;--blk3:#141414;--blk4:#1c1c1c;
+  --wht:#fff;--wht2:#e8e8e8;--muted:#666;--muted2:#999;
+  --fh:'Bebas Neue',sans-serif;--fb:'Outfit',sans-serif;--r:6px
+}
+html{scroll-behavior:smooth}
+body{background:var(--blk);color:var(--wht2);font-family:var(--fb);font-weight:300;line-height:1.65;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#cd,#cr{position:fixed;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);will-change:left,top}
+#cd{width:8px;height:8px;background:var(--y);mix-blend-mode:difference;transition:width .12s,height .12s}
+#cr{width:38px;height:38px;border:1.5px solid rgba(245,230,66,.5);transition:width .18s,height .18s,border-color .18s}
+body.hov #cd{width:13px;height:13px}
+body.hov #cr{width:56px;height:56px;border-color:rgba(245,230,66,.9)}
+body.clk #cd{width:5px;height:5px}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.022;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5vw;background:rgba(5,5,5,.93);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nb{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+.nb img{width:70px;height:70px;object-fit:contain}
+.nw{font-family:var(--fh);font-size:1.55rem;letter-spacing:.12em;color:var(--wht);line-height:1}
+.nw span{color:var(--y)}
+.nl{display:flex;gap:2.2rem;list-style:none}
+.nl a{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);text-decoration:none;transition:color .2s}
+.nl a:hover{color:var(--y)}
+.ncta{background:var(--y);color:var(--blk);font-family:var(--fb);font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.6rem 1.5rem;text-decoration:none;border-radius:3px;transition:background .2s,transform .15s;white-space:nowrap}
+.ncta:hover{background:#fff;transform:translateY(-1px)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hbg span{width:22px;height:1.5px;background:var(--y);display:block;transition:.3s}
+.hbg.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hbg.open span:nth-child(2){opacity:0}
+.hbg.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mm{display:none;position:fixed;inset:0;top:64px;background:rgba(5,5,5,.98);z-index:499;flex-direction:column;align-items:center;justify-content:center;gap:2.8rem}
+.mm.open{display:flex}
+.mm a{font-family:var(--fh);font-size:2.2rem;letter-spacing:.08em;color:var(--wht);text-decoration:none;transition:color .2s}
+.mm a:hover{color:var(--y)}
+.mm .mc{background:var(--y);color:var(--blk);padding:.8rem 2.4rem;border-radius:3px;font-size:1.1rem}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:7rem 5vw 5rem;position:relative;overflow:hidden}
+.hbgl{position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(245,230,66,.03) 80px),
+             repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(245,230,66,.03) 80px)}
+.hgl{position:absolute;top:-10%;left:-15%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,230,66,.07) 0%,transparent 65%);pointer-events:none}
+.hgr{position:absolute;bottom:0;right:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(245,230,66,.04) 0%,transparent 65%);pointer-events:none}
+.hi{position:relative;width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:4rem}
+.hl{max-width:760px}
+.hpill{display:inline-flex;align-items:center;gap:.6rem;background:var(--yd);border:1px solid var(--yb);padding:.35rem 1rem .35rem .7rem;border-radius:30px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--y);margin-bottom:2rem}
+.hpdot{width:6px;height:6px;border-radius:50%;background:var(--y);animation:pdot 2s ease-in-out infinite}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(245,230,66,.7)}50%{box-shadow:0 0 0 6px rgba(245,230,66,0)}}
+h1{font-family:var(--fh);font-size:clamp(3.2rem,7.5vw,7rem);line-height:1;letter-spacing:.02em;color:var(--wht);margin-bottom:1.4rem}
+h1 .ac{color:var(--y);display:block}
+.hdesc{font-size:1.05rem;color:var(--muted2);max-width:500px;margin-bottom:2.6rem;line-height:1.75}
+.ha{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.2rem}
+.by{background:var(--y);color:var(--blk);font-family:var(--fb);font-weight:700;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2.2rem;border:none;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:background .2s,transform .15s,box-shadow .2s}
+.by:hover{background:#fff;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,230,66,.25)}
+.bg2{background:transparent;color:var(--wht2);font-family:var(--fb);font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2.2rem;border:1px solid rgba(255,255,255,.15);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:border-color .2s,color .2s}
+.bg2:hover{border-color:var(--y);color:var(--y)}
+.hstats{display:flex;gap:3rem;padding-top:2.4rem;border-top:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
+.stn{font-family:var(--fh);font-size:2.2rem;color:var(--y);letter-spacing:.04em;line-height:1}
+.stl{font-size:.72rem;color:var(--muted);letter-spacing:.1em;margin-top:.3rem}
+.hlv{display:flex;align-items:center;justify-content:center}
+.hlw{width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(245,230,66,.08) 0%,transparent 70%);display:flex;align-items:center;justify-content:center;animation:flt 5s ease-in-out infinite;position:relative}
+.hlw::before{content:'';position:absolute;inset:-1px;border-radius:50%;border:1px solid var(--yb);animation:spn 12s linear infinite}
+.hlw::after{content:'';position:absolute;inset:-20px;border-radius:50%;border:1px dashed rgba(245,230,66,.1)}
+.hlw img{width:460px;height:460px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(245,230,66,.25))}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spn{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* TICKER */
+.tkr{background:var(--y);overflow:hidden;padding:.65rem 0}
+.tkt{display:flex;gap:2.5rem;animation:tkg 22s linear infinite;width:max-content;white-space:nowrap}
+.tki{font-family:var(--fh);font-size:.9rem;letter-spacing:.18em;color:var(--blk);display:flex;align-items:center;gap:.8rem}
+.tki::after{content:'◆';font-size:.5rem;opacity:.5}
+@keyframes tkg{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SP BAR */
+.spb{background:var(--blk2);border-bottom:1px solid rgba(255,255,255,.05);padding:1.6rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.spl{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.spavs{display:flex;align-items:center}
+.spav{width:36px;height:36px;border-radius:50%;border:2px solid var(--blk2);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:.9rem;color:var(--blk);margin-left:-10px}
+.spav:first-child{margin-left:0}
+.spc{font-size:.82rem;color:var(--wht2);margin-left:1rem}
+.spc span{color:var(--y);font-weight:600}
+
+/* BRANDS */
+#brands{background:var(--blk3);padding:3.5rem 0;overflow:hidden;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
+.brlb{text-align:center;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:2.2rem;padding:0 5vw}
+.brw{position:relative}
+.brw::before,.brw::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.brw::before{left:0;background:linear-gradient(to right,var(--blk3),transparent)}
+.brw::after{right:0;background:linear-gradient(to left,var(--blk3),transparent)}
+.brt{display:flex;animation:brg 30s linear infinite;width:max-content}
+.brt:hover{animation-play-state:paused}
+@keyframes brg{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.bri{display:flex;align-items:center;justify-content:center;padding:0 3.5rem;height:64px;flex-shrink:0;filter:grayscale(1) opacity(.4);transition:filter .3s,transform .3s}
+.bri:hover{filter:grayscale(0) opacity(1);transform:scale(1.07)}
+.bri svg{height:26px;width:auto}
+
+/* SECTIONS */
+section{padding:7rem 5vw}
+.slb{display:inline-flex;align-items:center;gap:.6rem;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--y);margin-bottom:.9rem}
+.slb::before{content:'';width:20px;height:1px;background:var(--y)}
+h2{font-family:var(--fh);font-size:clamp(2.2rem,4.5vw,4rem);color:var(--wht);line-height:1.05;letter-spacing:.03em;margin-bottom:.5rem}
+
+/* SERVICES */
+#services{background:var(--blk2)}
+.sri{max-width:600px;margin-bottom:4.5rem}
+.sri p{color:var(--muted2);font-size:.95rem;margin-top:1rem;line-height:1.75}
+.sg{display:grid;grid-template-columns:repeat(12,1fr);gap:1.5rem}
+.sc{background:var(--blk3);border:1px solid rgba(255,255,255,.06);padding:2.6rem 2.2rem;border-radius:var(--r);position:relative;overflow:hidden;transition:border-color .3s,transform .3s,background .3s;cursor:default}
+.sc:hover{border-color:var(--yb);transform:translateY(-3px);background:var(--blk4)}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--y),transparent);opacity:0;transition:opacity .3s}
+.sc:hover::before{opacity:1}
+.sc.s6{grid-column:span 6}.sc.s4{grid-column:span 4}
+.scn{font-family:var(--fh);font-size:3rem;color:rgba(245,230,66,.07);position:absolute;top:1.2rem;right:1.6rem;line-height:1;transition:color .3s}
+.sc:hover .scn{color:rgba(245,230,66,.15)}
+.sci{font-size:2rem;margin-bottom:1.4rem;display:block}
+.sc h3{font-family:var(--fh);font-size:1.5rem;letter-spacing:.04em;color:var(--wht);margin-bottom:.8rem}
+.sc p{font-size:.86rem;color:var(--muted2);line-height:1.78}
+.sts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.st{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(245,230,66,.07);border:1px solid var(--yb);color:var(--y);padding:.22rem .65rem;border-radius:20px}
+.sht{display:inline-flex;align-items:center;gap:.4rem;background:var(--y);color:var(--blk);font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border-radius:20px;margin-bottom:1rem}
+
+/* WHY */
+#why{background:var(--blk)}
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem}
+.wl p{color:var(--muted2);font-size:.95rem;line-height:1.8;margin:1rem 0 2rem}
+.wcl{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--y);font-weight:500;text-decoration:none;transition:gap .2s}
+.wcl:hover{gap:.9rem}
+.wps{display:flex;flex-direction:column;gap:1.2rem}
+.wp{display:flex;align-items:flex-start;gap:1.2rem;padding:1.6rem;border:1px solid rgba(255,255,255,.06);border-radius:var(--r);background:var(--blk2);transition:border-color .25s,background .25s}
+.wp:hover{border-color:var(--yb);background:var(--blk3)}
+.wpi{width:40px;height:40px;border-radius:8px;background:var(--yd);border:1px solid var(--yb);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.wpt{font-size:.94rem;font-weight:600;color:var(--wht);margin-bottom:.3rem}
+.wpd{font-size:.83rem;color:var(--muted2);line-height:1.7}
+
+/* PROCESS */
+#process{background:var(--blk2)}
+.pi{max-width:520px;margin-bottom:4rem}
+.pi p{color:var(--muted2);font-size:.92rem;margin-top:.8rem;line-height:1.75}
+.ps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.ps::before{content:'';position:absolute;top:27px;left:calc(12.5% + 20px);right:calc(12.5% + 20px);height:1px;background:linear-gradient(90deg,var(--y),rgba(245,230,66,.2) 50%,var(--y));z-index:0}
+.pst{padding:0 2rem 0 0;position:relative;z-index:1}
+.pst:last-child{padding-right:0}
+.pd{width:56px;height:56px;border-radius:50%;background:var(--blk3);border:2px solid var(--yb);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:1.3rem;color:var(--y);margin-bottom:1.8rem;position:relative;z-index:1;transition:background .3s,border-color .3s,color .3s}
+.pst:hover .pd{background:var(--y);color:var(--blk);border-color:var(--y)}
+.pst h4{font-size:1rem;font-weight:600;color:var(--wht);margin-bottom:.5rem}
+.pst p{font-size:.82rem;color:var(--muted2);line-height:1.7}
+
+/* REVIEWS */
+#reviews{background:var(--blk)}
+.rvh{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:3.5rem}
+.rvbig{font-family:var(--fh);font-size:5rem;color:var(--y);line-height:1}
+.rvss{color:var(--y);font-size:1.3rem;letter-spacing:.1em}
+.rvsb{font-size:.78rem;color:var(--muted);margin-top:.3rem}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.rc{background:var(--blk2);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:2.2rem;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.rc:hover{border-color:var(--yb);transform:translateY(-2px)}
+.rc::after{content:'❝';position:absolute;bottom:1rem;right:1.5rem;font-size:4rem;color:rgba(245,230,66,.05);line-height:1;pointer-events:none}
+.rct{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.4rem}
+.rav{width:48px;height:48px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:1.2rem;color:var(--blk)}
+.rst{color:var(--y);font-size:.85rem;letter-spacing:.1em}
+.rtx{font-size:.88rem;color:#b8b3aa;line-height:1.82;margin-bottom:1.5rem;font-style:italic}
+.ran{font-size:.92rem;font-weight:600;color:var(--wht)}
+.rar{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+.rbd{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+.rvb2{display:inline-flex;align-items:center;gap:.35rem;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--y);background:var(--yd);border:1px solid var(--yb);padding:.18rem .55rem;border-radius:10px}
+.rvb2::before{content:'✓'}
+.rsb{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--muted2);padding:.2rem .55rem;border-radius:10px}
+.rc.ft{grid-column:span 2;background:var(--blk3);border-color:var(--yb)}
+.rc.ft .rtx{font-size:.96rem}
+
+/* CTA STRIP */
+#cs{background:var(--y);padding:5rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:2rem}
+#cs h2{color:var(--blk);font-size:clamp(2rem,4vw,3.5rem)}
+.csp{color:rgba(0,0,0,.6);font-size:.96rem;margin-top:.5rem;max-width:480px}
+.csr{display:flex;flex-direction:column;gap:1rem;align-items:flex-end}
+.bbl{background:var(--blk);color:var(--y);font-family:var(--fb);font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding:1rem 2.4rem;border-radius:3px;text-decoration:none;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.6rem}
+.bbl:hover{background:#1a1a1a;transform:translateY(-1px)}
+.bwa{background:#25d366;color:#fff;font-family:var(--fb);font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding:1rem 2.4rem;border-radius:3px;text-decoration:none;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.6rem}
+.bwa:hover{background:#1db954;transform:translateY(-1px)}
+.cnote{font-size:.75rem;color:rgba(0,0,0,.5);text-align:center}
+
+/* CONTACT */
+#contact{background:var(--blk2)}
+.cg{display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;margin-top:4rem}
+.cl h3{font-family:var(--fh);font-size:1.8rem;letter-spacing:.04em;color:var(--wht);margin-bottom:1rem}
+.cl p{color:var(--muted2);font-size:.9rem;line-height:1.8;margin-bottom:2.4rem}
+.cch{display:flex;flex-direction:column;gap:.9rem}
+.cc{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.4rem;border:1px solid rgba(255,255,255,.07);background:var(--blk3);border-radius:var(--r);text-decoration:none;transition:border-color .2s,background .2s}
+.cc:hover{border-color:var(--yb);background:var(--blk4)}
+.cci{width:38px;height:38px;border-radius:8px;background:var(--yd);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ccl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ccv{font-size:.9rem;color:var(--wht2)}
+.cca{margin-left:auto;color:var(--muted);font-size:.9rem;transition:color .2s,transform .2s}
+.cc:hover .cca{color:var(--y);transform:translateX(3px)}
+
+/* FORM */
+.cf{display:flex;flex-direction:column;gap:1.1rem}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:.4rem}
+.fg label{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.fg input,.fg select,.fg textarea{
+  background:var(--blk3);border:1px solid rgba(255,255,255,.08);
+  color:var(--wht2);font-family:var(--fb);font-size:.9rem;font-weight:300;
+  padding:.85rem 1.1rem;border-radius:var(--r);outline:none;
+  transition:border-color .2s,box-shadow .2s;-webkit-appearance:none
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--muted)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--y);box-shadow:0 0 0 3px rgba(245,230,66,.08)}
+.fg textarea{min-height:120px;resize:vertical}
+.fg select option{background:var(--blk3)}
+.fsec{font-size:.74rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.fsb{
+  background:var(--y);color:var(--blk);border:none;cursor:pointer;
+  font-family:var(--fb);font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:1.05rem 2.4rem;border-radius:3px;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  align-self:flex-start;display:flex;align-items:center;gap:.5rem
+}
+.fsb:hover{background:#fff;transform:translateY(-1px);box-shadow:0 8px 28px rgba(245,230,66,.2)}
+.fsb:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* SUCCESS STATE */
+.form-success{
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:3rem 2rem;gap:1.2rem;
+  background:var(--blk3);border:1px solid rgba(74,222,128,.3);border-radius:var(--r);
+  min-height:300px;
+}
+.form-success.show{display:flex}
+.fs-icon{font-size:3rem}
+.fs-title{font-family:var(--fh);font-size:2rem;color:#4ade80;letter-spacing:.04em}
+.fs-msg{font-size:.88rem;color:var(--muted2);max-width:320px;line-height:1.7}
+.fs-back{
+  margin-top:.5rem;background:transparent;color:var(--y);
+  border:1px solid var(--yb);font-family:var(--fb);font-size:.78rem;
+  font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.6rem 1.4rem;border-radius:3px;cursor:pointer;
+  transition:background .2s,color .2s
+}
+.fs-back:hover{background:var(--y);color:var(--blk)}
+
+/* ERROR BANNER */
+.form-err{display:none;align-items:center;gap:.8rem;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.35);color:#fca5a5;font-size:.82rem;padding:.8rem 1rem;border-radius:var(--r);line-height:1.5}
+.form-err.show{display:flex}
+
+/* FOOTER */
+footer{background:var(--blk);border-top:1px solid rgba(255,255,255,.06);padding:2.4rem 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.fb2{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.fb2 img{width:70px;height:70px;object-fit:contain}
+.fbn{font-family:var(--fh);font-size:1.2rem;letter-spacing:.1em;color:var(--wht)}
+.fbn span{color:var(--y)}
+.fcp{font-size:.74rem;color:var(--muted)}
+.fl{display:flex;gap:1.8rem}
+.fl a{font-size:.74rem;color:var(--muted);text-decoration:none;transition:color .2s}
+.fl a:hover{color:var(--y)}
+
+/* WA FAB */
+.waf{position:fixed;bottom:2rem;right:2rem;z-index:400;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;transition:transform .2s,box-shadow .2s}
+.waf:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(37,211,102,.5)}
+.waf svg{width:28px;height:28px;fill:#fff}
+.wat{position:absolute;right:68px;top:50%;transform:translateY(-50%);background:var(--blk3);border:1px solid rgba(255,255,255,.1);color:var(--wht);font-size:.75rem;white-space:nowrap;padding:.4rem .8rem;border-radius:4px;pointer-events:none;opacity:0;transition:opacity .2s}
+.waf:hover .wat{opacity:1}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.rv.vis{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  .sc.s6,.sc.s4{grid-column:span 6}
+  .wg{grid-template-columns:1fr;gap:3rem}
+  .ps{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .ps::before{display:none}
+  .rc.ft{grid-column:span 1}
+  .rg{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nl,.ncta{display:none}
+  .hbg{display:flex}
+  .hi{grid-template-columns:1fr}
+  .hlv{display:none}
+  .sg{grid-template-columns:1fr}
+  .sc.s6,.sc.s4{grid-column:span 1}
+  .rg{grid-template-columns:1fr}
+  .rc.ft{grid-column:span 1}
+  .cg{grid-template-columns:1fr;gap:3rem}
+  .fr{grid-template-columns:1fr}
+  .ps{grid-template-columns:1fr}
+  #cs{flex-direction:column}
+  .csr{align-items:flex-start}
+  footer{flex-direction:column;text-align:center}
+  .fl{justify-content:center}
+  body{cursor:auto}
+  #cd,#cr{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="cd"></div>
+<div id="cr"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nb">
+    <img src="scaleity_logo.png" alt="Scaleity">
+    <span class="nw">SCALE<span>ITY</span></span>
+  </a>
+  <ul class="nl">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="ncta">Start Building →</a>
+  <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
+</nav>
+<div class="mm" id="mm">
+  <a href="#services" onclick="cm()">Services</a>
+  <a href="#why"      onclick="cm()">Why Us</a>
+  <a href="#process"  onclick="cm()">Process</a>
+  <a href="#reviews"  onclick="cm()">Reviews</a>
+  <a href="#contact"  onclick="cm()" class="mc">Start Building</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hbgl"></div><div class="hgl"></div><div class="hgr"></div>
+  <div class="hi">
+    <div class="hl">
+      <div class="hpill rv"><span class="hpdot"></span>Now accepting new projects</div>
+      <h1 class="rv d1">BUILD APPS<br>THAT<span class="ac">SCALE.</span></h1>
+      <p class="hdesc rv d2">We turn your idea into a live product — MVP apps, SaaS platforms, mobile apps & websites. Fast. Clean. Built to grow.</p>
+      <div class="ha rv d3">
+        <a href="#contact" class="by">Get a Free Quote →</a>
+        <a href="#services" class="bg2">See Our Work ↓</a>
+      </div>
+      <div class="hstats rv d4">
+        <div><div class="stn" data-count="50" data-suffix="+" data-dec="0">0+</div><div class="stl">Apps Delivered</div></div>
+        <div><div class="stn">3 Wks</div><div class="stl">Avg MVP Time</div></div>
+        <div><div class="stn" data-count="4.9" data-suffix="★" data-dec="1">0★</div><div class="stl">Client Rating</div></div>
+        <div><div class="stn" data-count="100" data-suffix="%" data-dec="0">0%</div><div class="stl">On-Time Delivery</div></div>
+      </div>
+    </div>
+    <div class="hlv rv d2">
+      <div class="hlw">
+        <img src="scaleity_logo.png" alt="Scaleity">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="tkr">
+  <div class="tkt">
+    <span class="tki">MVP Development</span><span class="tki">Flutter Apps</span><span class="tki">SaaS Platforms</span>
+    <span class="tki">CMS Solutions</span><span class="tki">Web Applications</span><span class="tki">AdMob Monetization</span>
+    <span class="tki">Android Apps</span><span class="tki">API Development</span><span class="tki">Firebase Backend</span>
+    <span class="tki">Play Store Launch</span><span class="tki">MVP Development</span><span class="tki">Flutter Apps</span>
+    <span class="tki">SaaS Platforms</span><span class="tki">CMS Solutions</span><span class="tki">Web Applications</span>
+    <span class="tki">AdMob Monetization</span><span class="tki">Android Apps</span><span class="tki">API Development</span>
+    <span class="tki">Firebase Backend</span><span class="tki">Play Store Launch</span>
+  </div>
+</div>
+
+<!-- SP BAR -->
+<div class="spb">
+  <span class="spl">Trusted by founders across India & beyond</span>
+  <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:.5rem">
+      <div class="spavs">
+        <div class="spav" style="background:#F5E642">A</div>
+        <div class="spav" style="background:#e8d93e">S</div>
+        <div class="spav" style="background:#ddd03a">R</div>
+        <div class="spav" style="background:#d2c836">P</div>
+        <div class="spav" style="background:#c8bf32">K</div>
+      </div>
+      <span class="spc"><span>50+</span> happy clients</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:.6rem">
+      <span style="color:var(--y);font-size:.9rem;letter-spacing:.08em">★★★★★</span>
+      <span style="font-size:.9rem;font-weight:600;color:var(--wht)">4.9</span>
+      <span style="font-size:.75rem;color:var(--muted)">/ 5.0</span>
+    </div>
+  </div>
+</div>
+
+<!-- BRANDS -->
+<div id="brands">
+  <p class="brlb">Trusted by developers and teams at leading companies</p>
+  <div class="brw">
+    <div class="brt">
+      <div class="bri"><svg viewBox="0 0 92 30"><text x="0" y="23" font-family="sans-serif" font-size="22" font-weight="700" fill="white">G</text><text x="18" y="23" font-family="sans-serif" font-size="22" fill="#EA4335">o</text><text x="32" y="23" font-family="sans-serif" font-size="22" fill="white">o</text><text x="46" y="23" font-family="sans-serif" font-size="22" fill="#FBBC04">g</text><text x="60" y="23" font-family="sans-serif" font-size="22" fill="#34A853">l</text><text x="68" y="23" font-family="sans-serif" font-size="22" fill="#EA4335">e</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 100 30"><text x="0" y="22" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="white">amazon</text><path d="M4 26 Q25 33 52 26" stroke="#FF9900" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M52 26 L58 21" stroke="#FF9900" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></div>
+      <div class="bri"><svg viewBox="0 0 72 28"><text x="0" y="22" font-family="sans-serif" font-size="22" font-weight="700" fill="#1877F2">M</text><text x="17" y="22" font-family="sans-serif" font-size="22" font-weight="700" fill="white">eta</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 120 28"><polygon points="7,2 19,14 7,26 1,20 9,14 1,8" fill="#3395FF"/><text x="25" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Razorpay</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 108 28"><rect x="0" y="2" width="24" height="24" rx="5" fill="#2874F0"/><text x="3" y="20" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="white">F</text><text x="30" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Flipkart</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 108 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Phone</text><text x="62" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#7C3AED">Pe</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 96 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#E23744">z</text><text x="12" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">omato</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 90 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#FC8019">s</text><text x="10" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">wiggy</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 84 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Pay</text><text x="36" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#00BAF2">tm</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 96 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Dream</text><text x="58" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#F5E642">11</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 92 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#F43397">M</text><text x="14" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">eesho</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 80 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#8B5CF6">z</text><text x="11" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">epto</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 90 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#54C5F8">F</text><text x="12" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">lutter</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 100 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#FFCA28">Firebase</text></svg></div>
+      <!-- duplicate for loop -->
+      <div class="bri"><svg viewBox="0 0 92 30"><text x="0" y="23" font-family="sans-serif" font-size="22" font-weight="700" fill="white">G</text><text x="18" y="23" font-family="sans-serif" font-size="22" fill="#EA4335">o</text><text x="32" y="23" font-family="sans-serif" font-size="22" fill="white">o</text><text x="46" y="23" font-family="sans-serif" font-size="22" fill="#FBBC04">g</text><text x="60" y="23" font-family="sans-serif" font-size="22" fill="#34A853">l</text><text x="68" y="23" font-family="sans-serif" font-size="22" fill="#EA4335">e</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 100 30"><text x="0" y="22" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="white">amazon</text><path d="M4 26 Q25 33 52 26" stroke="#FF9900" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M52 26 L58 21" stroke="#FF9900" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg></div>
+      <div class="bri"><svg viewBox="0 0 72 28"><text x="0" y="22" font-family="sans-serif" font-size="22" font-weight="700" fill="#1877F2">M</text><text x="17" y="22" font-family="sans-serif" font-size="22" font-weight="700" fill="white">eta</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 120 28"><polygon points="7,2 19,14 7,26 1,20 9,14 1,8" fill="#3395FF"/><text x="25" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Razorpay</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 108 28"><rect x="0" y="2" width="24" height="24" rx="5" fill="#2874F0"/><text x="3" y="20" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="white">F</text><text x="30" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Flipkart</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 108 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Phone</text><text x="62" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#7C3AED">Pe</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 96 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#E23744">z</text><text x="12" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">omato</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 90 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#FC8019">s</text><text x="10" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">wiggy</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 84 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Pay</text><text x="36" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#00BAF2">tm</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 96 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">Dream</text><text x="58" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#F5E642">11</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 92 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#F43397">M</text><text x="14" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">eesho</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 80 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#8B5CF6">z</text><text x="11" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">epto</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 90 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#54C5F8">F</text><text x="12" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="white">lutter</text></svg></div>
+      <div class="bri"><svg viewBox="0 0 100 28"><text x="0" y="21" font-family="sans-serif" font-size="17" font-weight="700" fill="#FFCA28">Firebase</text></svg></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sri rv">
+    <div class="slb">What We Build</div>
+    <h2>EVERY DIGITAL PRODUCT<br>YOUR BUSINESS NEEDS</h2>
+    <p>From mobile apps to full SaaS platforms — we scope, design, and ship production-ready products built to scale.</p>
+  </div>
+  <div class="sg">
+    <div class="sc s6 rv"><div class="scn">01</div><div class="sht">⚡ Most Popular</div><span class="sci">🚀</span><h3>MVP Development</h3><p>Launch your validated product in 3–4 weeks. We scope tight, build clean, and ship fast so you get real users and real feedback before burning budget.</p><div class="sts"><span class="st">Idea to Launch</span><span class="st">3–4 Weeks</span><span class="st">Scalable Architecture</span></div></div>
+    <div class="sc s6 rv d1"><div class="scn">02</div><span class="sci">📱</span><h3>Mobile App Development</h3><p>Cross-platform Android & iOS apps with Flutter. Smooth performance, beautiful UI, Play Store ready. Push notifications, analytics, and AdMob integration included.</p><div class="sts"><span class="st">Flutter</span><span class="st">Android & iOS</span><span class="st">Play Store</span></div></div>
+    <div class="sc s4 rv"><div class="scn">03</div><span class="sci">⚙️</span><h3>SaaS Platforms</h3><p>Full-stack SaaS with subscriptions, dashboards, role management, and robust APIs. Built to handle 10 to 100,000 users without breaking.</p><div class="sts"><span class="st">Full-Stack</span><span class="st">Billing</span></div></div>
+    <div class="sc s4 rv d1"><div class="scn">04</div><span class="sci">📝</span><h3>CMS Solutions</h3><p>Custom content management built around your workflow. Edit and publish without touching code — multi-user, media-ready, role-based.</p><div class="sts"><span class="st">Headless</span><span class="st">Custom Dashboard</span></div></div>
+    <div class="sc s4 rv d2"><div class="scn">05</div><span class="sci">🌐</span><h3>Business Websites</h3><p>High-converting, SEO-optimized websites that turn visitors into clients. Fast, mobile-first, designed to rank from day one.</p><div class="sts"><span class="st">SEO Ready</span><span class="st">Mobile First</span></div></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wg">
+    <div class="wl rv">
+      <div class="slb">Why Scaleity</div>
+      <h2>WE SHIP.<br>OTHERS TALK.</h2>
+      <p>Most agencies overpromise, underdeliver, and vanish after payment. We work like your in-house tech team — transparent, responsive, obsessed with getting your product live.</p>
+      <a href="#contact" class="wcl">Discuss your project →</a>
+    </div>
+    <div class="wps">
+      <div class="wp rv d1"><div class="wpi">⚡</div><div><div class="wpt">Rapid Delivery — 3 to 4 Weeks for MVP</div><div class="wpd">Optimized to ship your working product as fast as possible without cutting corners on quality.</div></div></div>
+      <div class="wp rv d2"><div class="wpi">🔎</div><div><div class="wpt">Full Transparency — Weekly Updates</div><div class="wpd">No black boxes. Staging access, weekly reports, and direct communication throughout the build.</div></div></div>
+      <div class="wp rv d3"><div class="wpi">📦</div><div><div class="wpt">Clean Code & Full Ownership</div><div class="wpd">All source code, repos, and assets are yours on delivery. Documented and ready for any developer.</div></div></div>
+      <div class="wp rv d4"><div class="wpi">🛡️</div><div><div class="wpt">30-Day Post-Launch Support — Free</div><div class="wpd">Bug fixes and minor changes included for 30 days after launch. No extra invoice, ever.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="pi rv">
+    <div class="slb">How It Works</div>
+    <h2>FROM IDEA TO LIVE<br>IN 4 STEPS</h2>
+    <p>A clear, no-surprise process so you always know what happens next.</p>
+  </div>
+  <div class="ps">
+    <div class="pst rv"><div class="pd">01</div><h4>Discovery Call</h4><p>We dig into your idea, users, and goals. 30 min. No sales pitch — just an honest conversation about what to build.</p></div>
+    <div class="pst rv d1"><div class="pd">02</div><h4>Scope & Quote</h4><p>Detailed plan with milestones, tech stack, and fixed pricing. You know exactly what you're getting before we start.</p></div>
+    <div class="pst rv d2"><div class="pd">03</div><h4>Design & Build</h4><p>Iterative development with weekly check-ins and staging access. You're involved — not waiting in the dark.</p></div>
+    <div class="pst rv d3"><div class="pd">04</div><h4>Launch & Handover</h4><p>Live deployment, full codebase handover, docs included. Plus 30 days free support after launch.</p></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="rvh">
+    <div class="rv"><div class="slb">Client Reviews</div><h2>REAL RESULTS.<br>REAL CLIENTS.</h2></div>
+    <div class="rv" style="text-align:right"><div class="rvbig">4.9</div><div class="rvss">★★★★★</div><div class="rvsb">Based on 47+ verified reviews</div></div>
+  </div>
+  <div class="rg">
+    <div class="rc ft rv">
+      <div class="rct"><div class="rav" style="background:linear-gradient(135deg,#F5E642,#c8a800)">A</div><div class="rst">★★★★★</div></div>
+      <p class="rtx">"I came to Scaleity with nothing but a rough concept and a tight budget. In 3.5 weeks I had a fully working Flutter app live on the Play Store with AdMob earning from day one. The UI detail was beyond what I expected — they communicated daily and made me feel like my project was their only one. I've since referred 3 other founders. If you need an app built, stop searching and just contact them."</p>
+      <div class="ran">Enter your Name</div><div class="rar">Founder, FitTrack India · Mumbai</div>
+      <div class="rbd"><span class="rvb2">Verified Client</span><span class="rsb">MVP + Flutter App</span></div>
+    </div>
+    <div class="rc rv d1">
+      <div class="rct"><div class="rav" style="background:linear-gradient(135deg,#e8d93e,#b8a800)">S</div><div class="rst">★★★★★</div></div>
+      <p class="rtx">"Hired Scaleity for our SaaS dashboard — clean code, intuitive UI, Razorpay billing integrated. Everything worked on launch day. Communication is what sets them apart. Every question answered within hours."</p>
+      <div class="ran">Sana Kapoor</div><div class="rar">CEO, LearnLoop · Bengaluru</div>
+      <div class="rbd"><span class="rvb2">Verified Client</span><span class="rsb">SaaS Platform</span></div>
+    </div>
+    <div class="rc rv d2">
+      <div class="rct"><div class="rav" style="background:linear-gradient(135deg,#ddd03a,#a89800)">P</div><div class="rst">★★★★★</div></div>
+      <p class="rtx">"The CMS they built for our editorial team is a game-changer. Writers picked it up in under an hour — no training needed. Role system, clean admin, delivered on time and on budget."</p>
+      <div class="ran">Priya Nair</div><div class="rar">Editor-in-Chief, DailyDigest · Delhi</div>
+      <div class="rbd"><span class="rvb2">Verified Client</span><span class="rsb">Custom CMS</span></div>
+    </div>
+    <div class="rc rv">
+      <div class="rct"><div class="rav" style="background:linear-gradient(135deg,#d2c836,#988e00)">K</div><div class="rst">★★★★★</div></div>
+      <p class="rtx">"My Android app went from sketch to Play Store in under 4 weeks. AdMob was dialled in from day one — hit my revenue target in week one. Scaleity is the real deal for indie developers."</p>
+      <div class="ran">Karan Shetty</div><div class="rar">Indie App Developer · Hyderabad</div>
+      <div class="rbd"><span class="rvb2">Verified Client</span><span class="rsb">Android + AdMob</span></div>
+    </div>
+    <div class="rc rv d1">
+      <div class="rct"><div class="rav" style="background:linear-gradient(135deg,#c8bf32,#88840a)">M</div><div class="rst">★★★★★</div></div>
+      <p class="rtx">"We needed a site fast for our product launch. Scaleity delivered something cleaner and faster than anything our in-house team built. Conversions jumped 40% vs our old site."</p>
+      <div class="ran">Meera Joshi</div><div class="rar">Co-Founder, GreenKart · Pune</div>
+      <div class="rbd"><span class="rvb2">Verified Client</span><span class="rsb">Business Website</span></div>
+    </div>
+    <div class="rc rv d2">
+      <div class="rct"><div class="rav" style="background:linear-gradient(135deg,#bcb52e,#78720a)">R</div><div class="rst">★★★★★</div></div>
+      <p class="rtx">"I'd been burned by freelancers before. Scaleity was completely different — transparent pricing, no hidden costs, code I can actually read. Worth every rupee. Planning my next project already."</p>
+      <div class="ran">Rahul D.</div><div class="rar">Startup Founder · Bengaluru</div>
+      <div class="rbd"><span class="rvb2">Verified Client</span><span class="rsb">MVP App</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="cs">
+  <div class="rv">
+    <h2>YOUR APP IDEA<br>DESERVES TO SHIP.</h2>
+    <p class="csp">Stop overthinking. We'll scope it, price it, and build it. First conversation is free.</p>
+  </div>
+  <div class="csr rv d1">
+    <a href="#contact" class="bbl">📩 Get a Free Quote →</a>
+    <a href="https://wa.me/917978143986?text=Hi%20Scaleity%2C%20I%27d%20like%20to%20discuss%20an%20app" target="_blank" class="bwa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chat on WhatsApp
+    </a>
+    <span class="cnote">⚡ Response within 2 hours · Free consultation</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="slb rv">Get in Touch</div>
+  <h2 class="rv d1">LET'S BUILD YOUR<br>APPLICATION TODAY</h2>
+  <div class="cg">
+    <!-- LEFT -->
+    <div class="cl rv d1">
+      <h3>Tell us about your idea.</h3>
+      <p>Fill out the form and we'll get back within 2 hours. Every submission lands directly in our inbox — nothing gets missed. Or reach out on WhatsApp for an instant reply.</p>
+      <div class="cch">
+        <a href="mailto:support@scaleity.in" class="cc">
+          <div class="cci">✉️</div>
+          <div><div class="ccl">Email</div><div class="ccv">support@scaleity.in</div></div>
+          <span class="cca">→</span>
+        </a>
+        <a href="https://wa.me/917978143986?text=Hi%20Scaleity%2C%20I%27d%20like%20to%20discuss%20an%20app" target="_blank" class="cc">
+          <div class="cci">💬</div>
+          <div><div class="ccl">WhatsApp</div><div class="ccv">Chat instantly — we reply fast</div></div>
+          <span class="cca">→</span>
+        </a>
+        <div class="cc" style="cursor:default">
+          <div class="cci">📍</div>
+          <div><div class="ccl">Location</div><div class="ccv">Bengaluru, India · Working Globally</div></div>
+        </div>
+        <div class="cc" style="cursor:default;border-color:var(--yb);background:var(--yd)">
+          <div class="cci">⚡</div>
+          <div><div class="ccl">Response Time</div><div class="ccv" style="color:var(--y)">Within 2 hours · Free First Call</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: FORM + SUCCESS STATE -->
+    <div class="rv d2">
+      <!-- ERROR BANNER -->
+      <div class="form-err" id="formErr">
+        ⚠️ <span id="errMsg">Something went wrong. Please email us directly at support@scaleity.in</span>
+      </div>
+
+      <!-- FORM -->
+      <form class="cf" id="cform" onsubmit="sendForm(event)">
+        <div class="fr">
+          <div class="fg"><label>Your Name *</label><input type="text" name="from_name" placeholder="Enter your name" required></div>
+          <div class="fg"><label>Email *</label><input type="email" name="from_email" placeholder="Enter your email" required></div>
+        </div>
+        <div class="fr">
+          <div class="fg"><label>WhatsApp Number</label><input type="tel" name="whatsapp" placeholder="Enter your WhatsApp number"></div>
+          <div class="fg">
+            <label>Service Needed *</label>
+            <select name="service" required>
+              <option value="" disabled selected>Choose a service</option>
+              <option>MVP Development</option>
+              <option>Mobile App (Flutter/Android)</option>
+              <option>SaaS Platform</option>
+              <option>Content Management System</option>
+              <option>Business Website</option>
+              <option>Not sure — help me decide</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Budget Range</label>
+          <select name="budget">
+            <option value="" disabled selected>Approximate budget</option>
+            <option>Under ₹50,000</option>
+            <option>₹50,000 – ₹1,50,000</option>
+            <option>₹1,50,000 – ₹5,00,000</option>
+            <option>₹5,00,000+</option>
+            <option>Let's discuss</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Describe Your Project *</label>
+          <textarea name="message" placeholder="Tell us what you're building — what it does, who uses it, and any specifics. Don't worry about being technical." required></textarea>
+        </div>
+        <div class="fsec">🔒 Your details go straight to our inbox. Private & secure.</div>
+        <button type="submit" class="fsb" id="fsb">
+          <span id="fst">Send My Request →</span>
+        </button>
+      </form>
+
+      <!-- SUCCESS STATE (shown after send) -->
+      <div class="form-success" id="formSuccess">
+        <div class="fs-icon">✅</div>
+        <div class="fs-title">MESSAGE SENT!</div>
+        <p class="fs-msg">We've received your request and will reply to your email within 2 hours. Keep an eye on <strong id="sentEmail"></strong></p>
+        <button class="fs-back" onclick="resetForm()">Send Another Request</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="fb2">
+    <img src="scaleity_logo.png" alt="Scaleity">
+    <span class="fbn">SCALE<span>ITY</span></span>
+  </a>
+  <span class="fcp">© 2025 Scaleity · Bengaluru, India · Built to Scale</span>
+  <div class="fl">
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- WA FAB -->
+<a href="https://wa.me/917978143986?text=Hi%20Scaleity%2C%20I%27d%20like%20to%20discuss%20an%20app" class="waf" target="_blank">
+  <span class="wat">Chat on WhatsApp</span>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+/* ── CURSOR ── */
+const cd=document.getElementById('cd'),cr=document.getElementById('cr');
+let mx=innerWidth/2,my=innerHeight/2,dx=mx,dy=my,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+document.addEventListener('mousedown',()=>document.body.classList.add('clk'));
+document.addEventListener('mouseup',()=>document.body.classList.remove('clk'));
+document.querySelectorAll('a,button,input,select,textarea').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+!function raf(){
+  dx+=(mx-dx)*.18;dy+=(my-dy)*.18;
+  rx+=(mx-rx)*.09;ry+=(my-ry)*.09;
+  cd.style.left=dx+'px';cd.style.top=dy+'px';
+  cr.style.left=rx+'px';cr.style.top=ry+'px';
+  requestAnimationFrame(raf);
+}();
+
+/* ── HAMBURGER ── */
+const hbg=document.getElementById('hbg'),mm=document.getElementById('mm');
+hbg.addEventListener('click',()=>{hbg.classList.toggle('open');mm.classList.toggle('open');document.body.style.overflow=mm.classList.contains('open')?'hidden':'';});
+function cm(){hbg.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';}
+
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+window.addEventListener('load',()=>document.querySelectorAll('#hero .rv').forEach((el,i)=>setTimeout(()=>el.classList.add('vis'),100+i*130)));
+
+/* ── COUNTERS ── */
+function animN(el,target,suffix,dec){
+  let v=0;const inc=target/108;
+  const t=setInterval(()=>{v=Math.min(v+inc,target);el.textContent=(dec?v.toFixed(dec):Math.floor(v))+suffix;if(v>=target)clearInterval(t);},16);
+}
+new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){
+  x.target.querySelectorAll('[data-count]').forEach(el=>{
+    animN(el,parseFloat(el.dataset.count),el.dataset.suffix,parseInt(el.dataset.dec));
+  });
+}});},{threshold:.5}).observe(document.querySelector('.hstats'));
+
+/* ══════════════════════════════════════
+   EMAILJS FORM — sends to support@scaleity.in
+   Setup: https://www.emailjs.com (free, 200 emails/month)
+   Instructions are in the HTML comment at the top of this file
+══════════════════════════════════════ */
+async function sendForm(e) {
+  e.preventDefault();
+
+  const btn    = document.getElementById('fsb');
+  const txt    = document.getElementById('fst');
+  const errEl  = document.getElementById('formErr');
+  const errMsg = document.getElementById('errMsg');
+  const form   = document.getElementById('cform');
+
+  // Hide any previous error
+  errEl.classList.remove('show');
+  btn.disabled = true;
+  txt.textContent = 'Sending…';
+
+  // Check EmailJS is configured
+  if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+    // Not configured — open mailto as fallback
+    const f = form;
+    const sub  = encodeURIComponent('New Inquiry — ' + f.service.value);
+    const body = encodeURIComponent(
+      `Name: ${f.from_name.value}\nEmail: ${f.from_email.value}\nWhatsApp: ${f.whatsapp.value}\nService: ${f.service.value}\nBudget: ${f.budget.value}\n\nProject:\n${f.message.value}`
+    );
+    window.location.href = `mailto:support@scaleity.in?subject=${sub}&body=${body}`;
+    btn.disabled = false;
+    txt.textContent = 'Send My Request →';
+    return;
+  }
+
+  try {
+    const templateParams = {
+      from_name:  form.from_name.value,
+      from_email: form.from_email.value,
+      whatsapp:   form.whatsapp.value,
+      service:    form.service.value,
+      budget:     form.budget.value,
+      message:    form.message.value,
+      to_email:   'support@scaleity.in'
+    };
+
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+
+    // Show success state
+    document.getElementById('sentEmail').textContent = form.from_email.value;
+    form.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    errMsg.textContent = 'Could not send. Please email us directly at support@scaleity.in';
+    errEl.classList.add('show');
+    btn.disabled = false;
+    txt.textContent = 'Send My Request →';
+  }
+}
+
+function resetForm() {
+  document.getElementById('cform').reset();
+  document.getElementById('cform').style.display = '';
+  document.getElementById('formSuccess').classList.remove('show');
+  document.getElementById('formErr').classList.remove('show');
+  document.getElementById('fsb').disabled = false;
+  document.getElementById('fst').textContent = 'Send My Request →';
+}
+</script>
+</body>
+</html>
